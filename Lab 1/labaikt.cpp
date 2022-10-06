@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <windows.h>
 #include <locale.h>
+#include <cmath>
 using namespace std;
 
 char int_symbol(int num)
@@ -61,10 +62,29 @@ void to_kth_base(int number, int base)
     cout << int_symbol(number % base);
 }
 
+int number_of_digits(int n, int base)
+{
+    int number_of_digits = 0;
+
+    do {
+        ++number_of_digits; 
+        n /= base;
+    } while (n);
+
+    return number_of_digits;
+}
+
 void to_tenth_base(int number, int k)
 {
-    //To do
-    return;
+    int p = number_of_digits(number, k) - 1;
+    int result = 0;
+    while (number != 0)
+    {
+        result += number / (int)pow(10, p) * (int)pow(k, p);
+        number = number % (int)pow(10, p);
+        --p;
+    }
+    cout << result << endl;
 }
 
 
@@ -74,6 +94,7 @@ int main()
     int number, base;
     cout << "Введите число и систему счисления" << endl;
     cin >> number >> base;
-    to_kth_base(number, base);
+    //to_kth_base(number, base);
+    to_tenth_base(number, base);
     return 0;
 }
